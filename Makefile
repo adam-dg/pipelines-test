@@ -1,3 +1,3 @@
 
-deploy:	build-prod
+deploy:
 	./scripts/deploy.sh
