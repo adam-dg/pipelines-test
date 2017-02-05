@@ -1,1 +1,1 @@
-Hello World
+Simple "Hello World" pipeline
