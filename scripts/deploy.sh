@@ -1,11 +1,13 @@
 #/usr/bin/env bash
 
+set -e
+
 KEYFILE=~/.ssh/deploy_id_rsa
 
 # Set up SSH access to the deployment target.
-mkdir -p ~/.ssh;
+mkdir -p ~/.ssh
 
-echo ${DEPLOY_PRIVATE_KEY} | base64 --decode > ${KEYFILE};
+echo ${DEPLOY_PRIVATE_KEY} | base64 --decode > ${KEYFILE}
 
 cat << EOF >> ~/.ssh/config
 Host ${DEPLOY_HOST}
@@ -13,8 +15,8 @@ Host ${DEPLOY_HOST}
     StrictHostKeyChecking=no
     IdentityFile=${KEYFILE}
 EOF
-chmod 700 ~/.ssh;
-chmod 600 ~/.ssh/config;
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/config
 
 mkdir -p /tmp/checkout-test && cd /tmp/checkout-test && git clone ${DEPLOY_URL} .
 
