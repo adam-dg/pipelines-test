@@ -8,6 +8,7 @@ KEYFILE=~/.ssh/deploy_id_rsa
 mkdir -p ~/.ssh
 
 echo ${DEPLOY_PRIVATE_KEY} | base64 --decode > ${KEYFILE}
+chmod 600 ${KEYFILE}
 
 cat << EOF >> ~/.ssh/config
 Host ${DEPLOY_HOST}
