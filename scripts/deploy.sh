@@ -2,6 +2,10 @@
 
 set -e
 
+#
+# This block could be wrapped up into its on helper function or script : Begin
+#
+
 KEYFILE=~/.ssh/deploy_id_rsa
 
 # Set up SSH access to the deployment target.
@@ -18,6 +22,10 @@ Host ${DEPLOY_HOST}
 EOF
 chmod 700 ~/.ssh
 chmod 600 ~/.ssh/config
+
+#
+# This block could be wrapped up into its on helper function or script : End
+#
 
 mkdir -p /tmp/checkout-test && cd /tmp/checkout-test && git clone ${DEPLOY_URL} .
 
