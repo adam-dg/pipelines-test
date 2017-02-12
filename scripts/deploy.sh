@@ -62,6 +62,6 @@ ls -lA /tmp/checkout-test
 # Relay commit to deployment repo
 #
 
-/opt/ci-tools/git-relay/git-relay-push.sh
+/opt/ci-tools/git-relay/git-relay-push.sh --src-repo-path=/opt/atlassian/bitbucketci/agent/build
 
 echo 'Relay complete'
