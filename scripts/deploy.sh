@@ -53,7 +53,7 @@ chmod 600 ~/.ssh/config
 #
 
 mkdir -p /opt/ci-tools
-cd /opt/ci-tools && git clone git@bitbucket.org:deesongroup6346/git-relay.git .
+cd /opt/ci-tools && git clone git@bitbucket.org:deesongroup6346/git-relay.git
 ls -lA /opt/ci-tools
 ls -lA /opt/ci-tools/git-relay
 
