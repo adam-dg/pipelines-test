@@ -8,6 +8,7 @@ set -e
 # @todo
 # Once the CI tools are built into the base image this can be simplified
 # to a call to configure-keys.sh
+# /opt/ci-tools/pipeline-ci-tools/configure-keys.sh --key=${BITBUCKET_PRIVATE_KEY} --key-file=${BITBUCKET_KEYFILE} --host=bitbucket.org
 #
 
 BITBUCKET_KEYFILE=~/.ssh/bitbucket_id_rsa
