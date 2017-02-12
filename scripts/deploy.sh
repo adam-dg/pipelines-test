@@ -70,3 +70,5 @@ ls -lA /tmp/checkout-test
 #
 
 /opt/ci-tools/git-relay/git-relay-push.sh
+
+echo 'Relay complete'
