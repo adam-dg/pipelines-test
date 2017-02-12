@@ -2,18 +2,15 @@
 
 set -e
 
-echo $UID
-echo $USER
-
 #
-# This block could be wrapped up into its on helper function or script : Begin
+# Configure Bitbucket access key for CI tools
+#
+# @todo
+# Once the CI tools are built into the base image this can be simplified
+# to a call to configure-keys.sh
 #
 
 BITBUCKET_KEYFILE=~/.ssh/bitbucket_id_rsa
-
-DEPLOY_KEYFILE=~/.ssh/deploy_id_rsa
-
-# Set up SSH access to the deployment target.
 mkdir -p ~/.ssh
 
 echo ${BITBUCKET_PRIVATE_KEY} | base64 --decode > ${BITBUCKET_KEYFILE}
@@ -27,25 +24,8 @@ Host bitbucket.org
 
 EOF
 
-echo ${DEPLOY_PRIVATE_KEY} | base64 --decode > ${DEPLOY_KEYFILE}
-chmod 600 ${DEPLOY_KEYFILE}
-
-cat << EOF >> ~/.ssh/config
-
-Host ${DEPLOY_HOST}
-    UserKnownHostsFile=/dev/null
-    StrictHostKeyChecking=no
-    IdentityFile=${DEPLOY_KEYFILE}
-
-EOF
-
 chmod 700 ~/.ssh
 chmod 600 ~/.ssh/config
-
-
-#
-# This block could be wrapped up into its on helper function or script : End
-#
 
 
 #
@@ -53,9 +33,21 @@ chmod 600 ~/.ssh/config
 #
 
 mkdir -p /opt/ci-tools
+
+cd /opt/ci-tools && git clone git@bitbucket.org:deesongroup6346/pipeline-ci-tools.git
 cd /opt/ci-tools && git clone git@bitbucket.org:deesongroup6346/git-relay.git
+
 ls -lA /opt/ci-tools
+ls -lA /opt/ci-tools/pipeline-ci-tools
 ls -lA /opt/ci-tools/git-relay
+
+
+#
+# Configiure the deployment SSH keys
+#
+
+/opt/ci-tools/pipeline-ci-tools/configure-keys.sh --key=${DEPLOY_PRIVATE_KEY} --key-file=${DEPLOY_KEYFILE} --host=${DEPLOY_HOST}
+
 
 #
 # Testing our deployment keys work
@@ -64,6 +56,7 @@ ls -lA /opt/ci-tools/git-relay
 mkdir -p /tmp/checkout-test && cd /tmp/checkout-test && git clone ${DEPLOY_URL} .
 
 ls -lA /tmp/checkout-test
+
 
 #
 # Relay commit to deployment repo
