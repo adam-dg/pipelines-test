@@ -64,3 +64,9 @@ ls -lA /opt/ci-tools/git-relay
 mkdir -p /tmp/checkout-test && cd /tmp/checkout-test && git clone ${DEPLOY_URL} .
 
 ls -lA /tmp/checkout-test
+
+#
+# Relay commit to deployment repo
+#
+
+/opt/ci-tools/git-relay/git-relay-push.sh
