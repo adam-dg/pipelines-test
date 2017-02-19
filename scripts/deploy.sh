@@ -70,8 +70,6 @@ if [ "$BITBUCKET_BRANCH" == "" ]; then
   exit 1
 fi
 
-~/Projects/pipeline-ci-tools
-
 echo ${BITBUCKET_BRANCH}
 
 target_branch=$(/opt/ci-tools/git-relay/deployment-manager.php ${BITBUCKET_BRANCH})
