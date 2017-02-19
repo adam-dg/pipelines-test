@@ -12,5 +12,5 @@ pipelines:
   tags:
     '*':
       - step:
-        script:
-          - make deploy
+          script:
+            - make deploy
