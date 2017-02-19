@@ -56,6 +56,8 @@ ls -lA /opt/ci-tools/git-relay
 
 # If there is a tag, push it up.
 if [ -n "${BITBUCKET_TAG}" ]; then
+    /opt/ci-tools/git-relay/git-relay-set-user-info.sh
+    /opt/ci-tools/git-relay/git-relay-add-remote.sh
     cd ${BITBUCKET_CLONE_DIR}
     git push deploy refs/tags/${BITBUCKET_TAG}
 fi
@@ -69,7 +71,7 @@ if [ -n "${BITBUCKET_BRANCH}" ]; then
     exit 1
   fi
 
-  /opt/ci-tools/git-relay/git-relay-push.sh  --dest-repo-branch=${target_branch}
+  /opt/ci-tools/git-relay/git-relay-mirror.sh  --dest-repo-branch=${target_branch}
 fi
 
 echo 'Relay complete'
