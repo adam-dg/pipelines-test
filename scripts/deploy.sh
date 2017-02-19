@@ -70,6 +70,20 @@ if [ "$BITBUCKET_BRANCH" == "" ]; then
   exit 1
 fi
 
-/opt/ci-tools/git-relay/git-relay-push.sh  --dest-repo-branch=${BITBUCKET_BRANCH}
+~/Projects/pipeline-ci-tools
+
+echo ${BITBUCKET_BRANCH}
+
+target_branch=$(/opt/ci-tools/git-relay/deployment-manager.php ${BITBUCKET_BRANCH})
+dm_exit_status=$?
+
+echo target_branch
+
+if [ ${dm_exit_status} != 0 ]; then
+  ${target_branch}
+  exit 1
+fi
+
+/opt/ci-tools/git-relay/git-relay-push.sh  --dest-repo-branch=${target_branch}
 
 echo 'Relay complete'
