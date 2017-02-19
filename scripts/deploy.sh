@@ -56,7 +56,7 @@ ls -lA /opt/ci-tools/git-relay
 
 # If there is a tag, push it up.
 if [ -n "${BITBUCKET_TAG}" ]; then
-    /opt/ci-tools/git-relay/git-relay-mirror.sh  --tag-name=${BITBUCKET_TAG}
+    /opt/ci-tools/git-relay/git-relay-mirror-tag.sh  --tag-name=${BITBUCKET_TAG}
 fi
 
 if [ -n "${BITBUCKET_BRANCH}" ]; then
