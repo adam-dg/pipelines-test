@@ -72,7 +72,7 @@ fi
 
 echo ${BITBUCKET_BRANCH}
 
-target_branch=$(/opt/ci-tools/git-relay/deployment-manager.php ${BITBUCKET_BRANCH})
+target_branch=$(php /opt/ci-tools/pipeline-ci-tools/deployment-manager.php ${BITBUCKET_BRANCH})
 dm_exit_status=$?
 
 echo target_branch
