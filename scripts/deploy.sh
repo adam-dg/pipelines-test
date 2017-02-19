@@ -56,6 +56,7 @@ ls -lA /opt/ci-tools/git-relay
 
 # If there is a tag, push it up.
 if [ -n "${BITBUCKET_TAG}" ]; then
+    cd ${BITBUCKET_CLONE_DIR}
     git push deploy refs/tags/${BITBUCKET_TAG}
 fi
 
