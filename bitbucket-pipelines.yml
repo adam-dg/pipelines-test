@@ -9,3 +9,8 @@ pipelines:
     - step:
         script:
           - make deploy
+  tags:
+    *.*.*:
+      - step:
+        script:
+          - make deploy
