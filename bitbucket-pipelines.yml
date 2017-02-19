@@ -8,5 +8,4 @@ pipelines:
   default:
     - step:
         script:
-          - make test
           - make deploy
