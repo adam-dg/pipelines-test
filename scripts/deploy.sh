@@ -75,7 +75,7 @@ echo ${BITBUCKET_BRANCH}
 echo 'here';
 echo $(which php)
 
-target_branch=$(php /opt/ci-tools/pipeline-ci-tools/deployment-manager.php ${BITBUCKET_BRANCH})
+target_branch=$(php -f /opt/ci-tools/pipeline-ci-tools/deployment-manager.php -- ${BITBUCKET_BRANCH})
 echo 'here 2'
 echo target_branch
 
