@@ -65,7 +65,7 @@ ls -lA /tmp/checkout-test
 
 #/opt/ci-tools/git-relay/git-relay-push.sh --src-repo-path=/opt/atlassian/bitbucketci/agent/build --dest-repo-url="git@github.com:adam-dg/pipelines-test.git" --dest-repo-branch=master --git-username="Jenkins Deeson" --git-email="jenkins@deeson.co.uk"
 
-if [ "$BITBUCKET_BRANCH" == "" ]; then
+if [ "$BITBUCKET_BRANCH" = "" ]; then
   echo 'No target repo branch to push to was specified.'
   exit 1
 fi
