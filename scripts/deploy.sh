@@ -54,9 +54,9 @@ ls -lA /opt/ci-tools/git-relay
 # Testing our deployment keys work
 #
 
-mkdir -p /tmp/checkout-test && cd /tmp/checkout-test && git clone ${DEPLOY_URL} .
+#mkdir -p /tmp/checkout-test && cd /tmp/checkout-test && git clone ${DEPLOY_URL} .
 
-ls -lA /tmp/checkout-test
+#ls -lA /tmp/checkout-test
 
 
 #
