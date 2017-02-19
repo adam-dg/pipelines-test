@@ -51,42 +51,16 @@ ls -lA /opt/ci-tools/git-relay
 
 
 #
-# Testing our deployment keys work
-#
-
-#mkdir -p /tmp/checkout-test && cd /tmp/checkout-test && git clone ${DEPLOY_URL} .
-
-#ls -lA /tmp/checkout-test
-
-
-#
 # Relay commit to deployment repo
 #
-
-#/opt/ci-tools/git-relay/git-relay-push.sh --src-repo-path=/opt/atlassian/bitbucketci/agent/build --dest-repo-url="git@github.com:adam-dg/pipelines-test.git" --dest-repo-branch=master --git-username="Jenkins Deeson" --git-email="jenkins@deeson.co.uk"
 
 if [ "$BITBUCKET_BRANCH" = "" ]; then
   echo 'No target repo branch to push to was specified.'
   exit 1
 fi
 
-echo ${BITBUCKET_BRANCH}
-
-echo 'here';
-echo $(which php)
-
-php -f /opt/ci-tools/pipeline-ci-tools/deployment-manager.php -- ${BITBUCKET_BRANCH} "${BITBUCKET_CLONE_DIR}/deployment-manager.json"
-
 target_branch=$(php -f /opt/ci-tools/pipeline-ci-tools/deployment-manager.php -- ${BITBUCKET_BRANCH} "${BITBUCKET_CLONE_DIR}/deployment-manager.json")
-echo 'here 2'
-echo target_branch
-
-echo 'here 3'
-
 dm_exit_status=$?
-echo $dm_exit_status
-
-echo 'here 4'
 
 if [ ${dm_exit_status} != 0 ]; then
   ${target_branch}
