@@ -1,1 +1,1 @@
-Simple "Hello World" pipeline
+Testing relaying of Git Flow "feature" branches
