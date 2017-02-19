@@ -54,19 +54,21 @@ ls -lA /opt/ci-tools/git-relay
 # Relay commit to deployment repo
 #
 
-if [ "$BITBUCKET_BRANCH" = "" ]; then
-  echo 'No target repo branch to push to was specified.'
-  exit 1
+# If there is a tag, push it up.
+if [ -n "${BITBUCKET_TAG}" ]; then
+    git push deploy refs/tags/${BITBUCKET_TAG}
 fi
 
-target_branch=$(php -f /opt/ci-tools/pipeline-ci-tools/deployment-manager.php -- ${BITBUCKET_BRANCH} "${BITBUCKET_CLONE_DIR}/deployment-manager.json")
-dm_exit_status=$?
+if [ -n "${BITBUCKET_BRANCH}" ]; then
+  target_branch=$(php -f /opt/ci-tools/pipeline-ci-tools/deployment-manager.php -- ${BITBUCKET_BRANCH} "${BITBUCKET_CLONE_DIR}/deployment-manager.json")
+  dm_exit_status=$?
 
-if [ ${dm_exit_status} != 0 ]; then
-  ${target_branch}
-  exit 1
+  if [ ${dm_exit_status} != 0 ]; then
+    ${target_branch}
+    exit 1
+  fi
+
+  /opt/ci-tools/git-relay/git-relay-push.sh  --dest-repo-branch=${target_branch}
 fi
-
-/opt/ci-tools/git-relay/git-relay-push.sh  --dest-repo-branch=${target_branch}
 
 echo 'Relay complete'
