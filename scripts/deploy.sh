@@ -72,10 +72,19 @@ fi
 
 echo ${BITBUCKET_BRANCH}
 
-target_branch=$(php /opt/ci-tools/pipeline-ci-tools/deployment-manager.php ${BITBUCKET_BRANCH})
-dm_exit_status=$?
+echo 'here';
+echo $(which php)
 
+target_branch=$(php /opt/ci-tools/pipeline-ci-tools/deployment-manager.php ${BITBUCKET_BRANCH})
+echo 'here 2'
 echo target_branch
+
+echo 'here 3'
+
+dm_exit_status=$?
+echo $dm_exit_status
+
+echo 'here 4'
 
 if [ ${dm_exit_status} != 0 ]; then
   ${target_branch}
