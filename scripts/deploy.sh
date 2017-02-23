@@ -38,9 +38,9 @@ mkdir -p /opt/ci-tools
 cd /opt/ci-tools && git clone git@bitbucket.org:deesongroup6346/pipeline-ci-tools.git
 cd /opt/ci-tools && git clone git@bitbucket.org:deesongroup6346/git-relay.git
 
-ls -lA /opt/ci-tools
-ls -lA /opt/ci-tools/pipeline-ci-tools
-ls -lA /opt/ci-tools/git-relay
+#ls -lA /opt/ci-tools
+#ls -lA /opt/ci-tools/pipeline-ci-tools
+#ls -lA /opt/ci-tools/git-relay
 
 
 #
@@ -54,9 +54,16 @@ ls -lA /opt/ci-tools/git-relay
 # Relay commit to deployment repo
 #
 
+deploy_url=""
+if [ "${GIT_RELAY_DEST_REPO_URL}" != "" ]; then
+  deploy_url="${GIT_RELAY_DEST_REPO_URL}"
+elif [ "${DEPLOY_URL}" != "" ]; then
+  deploy_url="${DEPLOY_URL}"
+fi
+
 # If there is a tag, push it up.
 if [ -n "${BITBUCKET_TAG}" ]; then
-    /opt/ci-tools/git-relay/git-relay-mirror-tag.sh  --tag-name=${BITBUCKET_TAG}
+    /opt/ci-tools/git-relay/git-relay-mirror-tag.sh --dest-repo-url="${deploy_url}" --tag-name=${BITBUCKET_TAG}
 fi
 
 if [ -n "${BITBUCKET_BRANCH}" ]; then
@@ -68,7 +75,7 @@ if [ -n "${BITBUCKET_BRANCH}" ]; then
     exit 1
   fi
 
-  /opt/ci-tools/git-relay/git-relay-mirror.sh  --dest-repo-branch=${target_branch}
+  /opt/ci-tools/git-relay/git-relay-mirror.sh --dest-repo-url="${deploy_url}" --dest-repo-branch=${target_branch}
 fi
 
 echo 'Relay complete'
