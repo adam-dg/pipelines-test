@@ -62,7 +62,7 @@ elif [ "${DEPLOY_URL}" != "" ]; then
 fi
 
 src_repo_path=""
-if [ "${GIT_RELAY_SRC_REPO_PATH} != "" ]; then
+if [ "${GIT_RELAY_SRC_REPO_PATH}" != "" ]; then
   src_repo_path="${GIT_RELAY_SRC_REPO_PATH}"
 elif [ "${BITBUCKET_CLONE_DIR}" != "" ]; then
   src_repo_path="${BITBUCKET_CLONE_DIR}"
