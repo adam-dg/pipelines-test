@@ -1,1 +1,1 @@
-Testing relaying with reduced number of Pipelines environment variables
+Testing relaying with new GIT_RELAY_TYPE environment variable
