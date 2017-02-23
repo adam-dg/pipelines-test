@@ -61,9 +61,17 @@ elif [ "${DEPLOY_URL}" != "" ]; then
   deploy_url="${DEPLOY_URL}"
 fi
 
+src_repo_path=""
+if [ "${GIT_RELAY_SRC_REPO_PATH} != "" ]; then
+  src_repo_path="${GIT_RELAY_SRC_REPO_PATH}"
+elif [ "${BITBUCKET_CLONE_DIR}" != "" ]; then
+  src_repo_path="${BITBUCKET_CLONE_DIR}"
+fi
+
+
 # If there is a tag, push it up.
 if [ -n "${BITBUCKET_TAG}" ]; then
-    /opt/ci-tools/git-relay/git-relay-mirror-tag.sh --dest-repo-url="${deploy_url}" --tag-name=${BITBUCKET_TAG}
+  /opt/ci-tools/git-relay/git-relay-mirror-tag.sh --src-repo-path="${src_repo_path}" --dest-repo-url="${deploy_url}" --tag-name=${BITBUCKET_TAG}
 fi
 
 if [ -n "${BITBUCKET_BRANCH}" ]; then
@@ -75,7 +83,7 @@ if [ -n "${BITBUCKET_BRANCH}" ]; then
     exit 1
   fi
 
-  /opt/ci-tools/git-relay/git-relay-mirror.sh --dest-repo-url="${deploy_url}" --dest-repo-branch=${target_branch}
+  /opt/ci-tools/git-relay/git-relay-mirror.sh --src-repo-path="${src_repo_path}" --dest-repo-url="${deploy_url}" --dest-repo-branch=${target_branch}
 fi
 
 echo 'Relay complete'
