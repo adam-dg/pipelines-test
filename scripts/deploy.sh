@@ -75,7 +75,7 @@ fi
 
 # If there is a tag, push it up.
 if [ -n "${BITBUCKET_TAG}" ]; then
-  if [ "{$relay_type}" = "mirror" ]; then
+  if [ "${relay_type}" = "mirror" ]; then
     /opt/ci-tools/git-relay/git-relay.sh mirror tag -- --src-repo-path="${src_repo_path}" --dest-repo-url="${deploy_url}" --tag-name=${BITBUCKET_TAG}
   else
     echo "Relay type '${relay_type}' not recognised"
@@ -94,7 +94,7 @@ if [ -n "${BITBUCKET_BRANCH}" ]; then
   fi
 
   set -e
-  if [ "{$relay_type}" = "mirror" ]; then
+  if [ "${relay_type}" = "mirror" ]; then
     /opt/ci-tools/git-relay/git-relay.sh mirror -- --src-repo-path="${src_repo_path}" --dest-repo-url="${deploy_url}" --dest-repo-branch=${target_branch}
   else
     echo "Relay type '${relay_type}' not recognised"
