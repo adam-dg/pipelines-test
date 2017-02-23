@@ -1,4 +1,4 @@
-#/usr/bin/env bash
+#!/usr/bin/env bash
 
 set -e
 
@@ -68,13 +68,23 @@ elif [ "${BITBUCKET_CLONE_DIR}" != "" ]; then
   src_repo_path="${BITBUCKET_CLONE_DIR}"
 fi
 
+relay_type="snapshot"
+if [ "${GIT_RELAY_TYPE}" != "" ]; then
+  relay_type="${GIT_RELAY_TYPE}"
+fi
 
 # If there is a tag, push it up.
 if [ -n "${BITBUCKET_TAG}" ]; then
-  /opt/ci-tools/git-relay/git-relay-mirror-tag.sh --src-repo-path="${src_repo_path}" --dest-repo-url="${deploy_url}" --tag-name=${BITBUCKET_TAG}
+  if [ "{$relay_type}" = "mirror" ]; then
+    /opt/ci-tools/git-relay/git-relay.sh mirror tag -- --src-repo-path="${src_repo_path}" --dest-repo-url="${deploy_url}" --tag-name=${BITBUCKET_TAG}
+  else
+    echo "Relay type '${relay_type}' not recognised"
+    exit 1
+  fi
 fi
 
 if [ -n "${BITBUCKET_BRANCH}" ]; then
+  set +e
   target_branch=$(php -f /opt/ci-tools/pipeline-ci-tools/deployment-manager.php -- ${BITBUCKET_BRANCH} "${BITBUCKET_CLONE_DIR}/deployment-manager.json")
   dm_exit_status=$?
 
@@ -83,7 +93,13 @@ if [ -n "${BITBUCKET_BRANCH}" ]; then
     exit 1
   fi
 
-  /opt/ci-tools/git-relay/git-relay-mirror.sh --src-repo-path="${src_repo_path}" --dest-repo-url="${deploy_url}" --dest-repo-branch=${target_branch}
+  set -e
+  if [ "{$relay_type}" = "mirror" ]; then
+    /opt/ci-tools/git-relay/git-relay.sh mirror -- --src-repo-path="${src_repo_path}" --dest-repo-url="${deploy_url}" --dest-repo-branch=${target_branch}
+  else
+    echo "Relay type '${relay_type}' not recognised"
+    exit 1
+  fi
 fi
 
 echo 'Relay complete'
