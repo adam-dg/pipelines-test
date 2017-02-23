@@ -1,1 +1,1 @@
-Testing relaying of Git Flow "feature" branches
+Testing relaying with reduced number of Pipelines environment variables
